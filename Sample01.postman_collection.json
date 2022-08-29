@@ -1,0 +1,905 @@
+{
+	"info": {
+		"_postman_id": "e117767b-fa6d-4f09-b32f-78f40a633394",
+		"name": "Sample01",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12126907"
+	},
+	"item": [
+		{
+			"name": "Book smaple",
+			"item": [
+				{
+					"name": "01 - Book status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/* \r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// const resp = pm.response.json();\r",
+									"console.log(resp);\r",
+									"console.log(resp.status); // console.log(resp['status']);\r",
+									"\r",
+									"\r",
+									"pm.test(\"test name\", function () {\r",
+									"    // write assertions\r",
+									"}); */\r",
+									"\r",
+									"const resp = pm.response.json();\r",
+									"console.log(resp['status']);\r",
+									"\r",
+									"pm.test(\"Check status\", () => {\r",
+									"    //console.log(pm.expect((resp.status).to.eql(\"OK\")))\r",
+									"    if (resp.status === \"OK\")\r",
+									"        console.log(\"Yesssssssssssss\");\r",
+									"    else \r",
+									"        console.log(\"Noooooooooooooo\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02 - Get book list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check status code\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const resp = pm.response.json();\r",
+									"\r",
+									"const nonFictionBooks = resp.filter((book) => book.available === true);\r",
+									"\r",
+									"const book = nonFictionBooks[0];\r",
+									"\r",
+									"if(book){\r",
+									"    pm.globals.set(\"bookOd\", book.id);\r",
+									"}\r",
+									"\r",
+									"pm.test(\"founf book\", () => {\r",
+									"    pm.expect(book).to.be.an('object');\r",
+									"    pm.expect(book.available).to.be.true;\r",
+									"    pm.expect(book.available).to.eql(true);\r",
+									"    pm.expect(book.type).to.eql(\"non-fiction\");\r",
+									"});\r",
+									"console.log(resp[0].id);\r",
+									"\r",
+									"//pm.globals.set(\"bookId\", resp[0].id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/books?type=non-fiction",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "non-fiction"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03 - Get book info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check status code\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const resp = pm.response.json();\r",
+									"\r",
+									"pm.test(\"is in stock\", () => {\r",
+									"    //pm.expect(bookId)\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/books/:bookId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books",
+								":bookId"
+							],
+							"variable": [
+								{
+									"key": "bookId",
+									"value": "{{bookId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04 - RegisterAPIClient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientName\": \"Shokoufeh\",\r\n    \"clientEmail\": \"shokoufehrouhi1@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api-clients",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api-clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05 - Send order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check status code\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 6,\r\n    \"customerName\": \"{{$randomFullName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "06 - Gett all orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check status code\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "07 - Get an order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check status code\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/:orderId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "08 -Update an order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check status code\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerName\": \"{{$randomFullName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/:orderId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "09 - delete an order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check status code\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/:orderId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sample",
+			"item": [
+				{
+					"name": "Req01",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "fgcf,hgcvh",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://postman-echo.com/get?name=shooki&family=Rouhi",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"get"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "shooki"
+								},
+								{
+									"key": "family",
+									"value": "Rouhi"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Req02",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// let firstName = 'John';\r",
+									"// const age = 30\r",
+									"// console.log('First name is: ' + firstName + ' with ' + age + ' years old.');\r",
+									"\r",
+									"// let firstName = 'John';\r",
+									"// let lastName = 'dior'; \r",
+									"// let age = 30;\r",
+									"// let name1 = firstName + ' ' + lastName;\r",
+									"// console.log(name1);\r",
+									"// let name2 = `${firstName} ${lastName}`;\r",
+									"// console.log(name2);\r",
+									"\r",
+									"// if (firstName === 'John' && age > 20){\r",
+									"//     console.log(firstName);\r",
+									"// } else{\r",
+									"//     console.log('Error');\r",
+									"// }\r",
+									"\r",
+									"// let firstName = 'John';\r",
+									"// let lastName = 'dior'; \r",
+									"// let age = 30;\r",
+									"// function userinfo(firstName, lastName, age){\r",
+									"//     console.log(firstName + ' ' + lastName + ' is ' + age + ' years old.')\r",
+									"// }\r",
+									"\r",
+									"// userinfo(firstName,lastName,age);\r",
+									"\r",
+									"let person = {\r",
+									"    firstName: 'John',\r",
+									"    lastName: 'Dior',\r",
+									"    age: 30,\r",
+									"    'E-mail': 'john@example.com',\r",
+									"    sayHello: function (){\r",
+									"        console.log(`Hello ${this.firstName}`);\r",
+									"    }\r",
+									"}\r",
+									"person.hairColor = 'Black';\r",
+									"console.log(person['E-mail']);\r",
+									"console.log(person);\r",
+									"person.sayHello();\r",
+									"let personjs = JSON.parse(JSON.stringify(person)); \r",
+									"console.log(personjs)\r",
+									"console.log(personjs.age);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "httpbin.org/get",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Req03",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"/* array format: \r",
+									"socialProfiles = ['Facebook', 'Tiktok', 'Instagram', 30, {}];\r",
+									"console.log(socialProfiles);\r",
+									"console.log(socialProfiles.length); */\r",
+									"let person = {\r",
+									"    firstName: 'John',\r",
+									"    lastName: 'Dior',\r",
+									"    age: 30,\r",
+									"    socialProfiles: ['Facebook', 'Tiktok', 'Instagram', 30, {name: '123'}],\r",
+									"    'E-mail': 'john@example.com'\r",
+									"}\r",
+									"/*\r",
+									"console.log(person.socialProfiles[2]);\r",
+									"console.log(person.socialProfiles[4].name);\r",
+									"*/\r",
+									"person.socialProfiles.push(\"YouTube\");\r",
+									"console.log(person.socialProfiles);\r",
+									"\r",
+									"person.socialProfiles.pop();\r",
+									"console.log(person.socialProfiles);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "httpbin.org/get",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Req04",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"/* array format: \r",
+									"socialProfiles = ['Facebook', 'Tiktok', 'Instagram', 30, {}];\r",
+									"console.log(socialProfiles);\r",
+									"console.log(socialProfiles.length); */\r",
+									"let person = {\r",
+									"    firstName: 'John',\r",
+									"    lastName: 'Dior',\r",
+									"    age: 30,\r",
+									"    socialProfiles: ['Facebook', 'Tiktok', 'Instagram', 'YouTube'],\r",
+									"    'E-mail': 'john@example.com'\r",
+									"}\r",
+									"\r",
+									"person.socialProfiles.forEach(function (item, index, array){\r",
+									"    console.log(item);\r",
+									"    console.log(index);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "httpbin.org/get",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Req05",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let person = {\r",
+									"    firstName: 'John',\r",
+									"    lastName: 'Dior',\r",
+									"    age: 30,\r",
+									"    socialProfiles: ['Facebook', 'Tiktok', 'Instagram', 'YouTube'],\r",
+									"    'E-mail': 'john@example.com'\r",
+									"}\r",
+									"\r",
+									"let hasTwiter = false;\r",
+									"person.socialProfiles.forEach(function (item, index, array){\r",
+									"    if (item === 'Twiter')\r",
+									"        hasTwiter = true;\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"console.log(hasTwiter);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "httpbin.org/get",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Req06",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "httpbin.org/get",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Req07",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									" const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Check name\", () => {\r",
+									"    if (pm.expect(response.name).to.eql('Jane')){\r",
+									"        console.log('yesssssssssss');\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Jane has instagarm\", () => {\r",
+									"    let hasinstagram = false; \r",
+									"    response.socialMedia.forEach(item => {\r",
+									"        if (item === 'Instagram')\r",
+									"            hasinstagram = true;\r",
+									"    });\r",
+									"    if (pm.expect(hasinstagram).to.eql(true)){\r",
+									"        console.log('Okkkkkkkkkkkkkkkkkk')\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://run.mocky.io/v3/0d6b61f9-a2db-4286-964a-9460db039204",
+							"protocol": "https",
+							"host": [
+								"run",
+								"mocky",
+								"io"
+							],
+							"path": [
+								"v3",
+								"0d6b61f9-a2db-4286-964a-9460db039204"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Req08",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const resp = pm.response.json();\r",
+									"\r",
+									"console.log(resp.Response.Data[0].Results[1]);\r",
+									"\r",
+									"const results = resp.Response.Data[0].Results;\r",
+									"let hasOneActiveAddress = false;\r",
+									"\r",
+									"results.forEach((result) => {\r",
+									"    if (result.Address.Active === true){\r",
+									"        hasOneActiveAddress = true;\r",
+									"    }\r",
+									"})\r",
+									"console.log(hasOneActiveAddress);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://run.mocky.io/v3/62aa820c-8e42-43e7-8897-6f154b253711",
+							"protocol": "https",
+							"host": [
+								"run",
+								"mocky",
+								"io"
+							],
+							"path": [
+								"v3",
+								"62aa820c-8e42-43e7-8897-6f154b253711"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://simple-books-api.glitch.me"
+		},
+		{
+			"key": "accessToken",
+			"value": "-------------------",
+			"type": "string"
+		}
+	]
+}
