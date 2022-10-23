@@ -1,0 +1,241 @@
+{
+	"info": {
+		"_postman_id": "99371320-cb01-4c70-a79a-769486789965",
+		"name": "Test-prj",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Sample Request",
+			"_postman_id": "921b7106-5dfa-4ffa-9ef3-a00320c42f28",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "email",
+						"value": "john@gmail.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "httpbin.org/get?name=John",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"get"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "John",
+							"type": "text"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Sample Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1ec4df57-ee43-4d90-9f11-c66be0d89f9a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "2db3a393-af92-43dc-b3cd-1594fa0578e3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\": \"{{orderId}}\",\r\n    \"products\": [\r\n        {\r\n            \"Quantity\": 10 , \r\n            \"productId\": 3000\r\n        },\r\n        {\r\n            \"Quantity\": 10 , \r\n            \"productId\": 3000\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "httpbin.org/post"
+			},
+			"response": []
+		},
+		{
+			"name": "Post Sample Request - 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "661e9f7b-4d1d-4680-ac50-8dd4bfccad79",
+						"exec": [
+							"const customerId = Math.floor((Math.random() * 100) + 1);\r",
+							"console.log(customerId)\r",
+							"pm.globals.set(\"customerId\", customerId);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b019863-4d82-432e-bb29-db729fa511b2",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let CID = pm.globals.get(\"customerId\");\r",
+							"\r",
+							"pm.test(\"Check customerId\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.json.customerId).to.eql(CID);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check productId\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.json.products[0].productId).to.eql(3000);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "5d78a30f-59e2-4c98-a594-ed8a0779813d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\": \"{{orderId}}\",\r\n    \"customerId\": {{customerId}},\r\n    \"products\": [\r\n        {\r\n            \"Quantity\": {{$randomInt}} , \r\n            \"productId\": 3000\r\n        },\r\n        {\r\n            \"Quantity\": {{$randomInt}} , \r\n            \"productId\": 3001\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "httpbin.org/post"
+			},
+			"response": []
+		},
+		{
+			"name": "uuid Sample Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "70360b76-f529-4e15-8411-565e96d46523",
+						"exec": [
+							"const resp = pm.response.json();\r",
+							"\r",
+							"pm.globals.set(\"orderId\", resp.uuid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "9553fa74-4031-47eb-a359-8920429fbc82",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "httpbin.org/uuid"
+			},
+			"response": []
+		},
+		{
+			"name": "Status Ssample Request",
+			"_postman_id": "40da71b3-7100-467f-967c-3cd6f84456f2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "email",
+						"value": "john@gmail.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "httpbin.org/status/:status?name=Johm",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"status",
+						":status"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Johm"
+						}
+					],
+					"variable": [
+						{
+							"key": "status",
+							"value": "200",
+							"type": "string"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth Ssample Request",
+			"_postman_id": "70f9c2b9-e349-4524-b13c-b912cb9ace95",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "Shooki"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "email",
+						"value": "john@gmail.com",
+						"type": "text"
+					}
+				],
+				"url": "httpbin.org/bearer"
+			},
+			"response": []
+		}
+	]
+}
